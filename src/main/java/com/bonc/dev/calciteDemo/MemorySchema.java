@@ -34,8 +34,9 @@ public class MemorySchema extends AbstractSchema {
     public Map<String, Table> getTableMap() {
         Map<String, Table> tables = new HashMap<String, Table>();
         Database database = MemoryData.MAP.get(this.dbName);
-        if(database == null)
-        	return tables;
+        if(database == null) {
+            return tables;
+        }
         for(MemoryData.Table table : database.tables) {
             tables.put(table.tableName, new MemoryTable(table));
         }
@@ -45,6 +46,7 @@ public class MemorySchema extends AbstractSchema {
     /**
      * 获取操作函数中所有操作函数，将这些函数转换为Calcite中的概念。 
      */
+    @Override
     protected Multimap<String, Function> getFunctionMultimap() {
     	ImmutableMultimap<String,ScalarFunction> funcs = ScalarFunctionImpl.createAll(TimeOperator.class);
     	Multimap<String, Function> functions = HashMultimap.create();
